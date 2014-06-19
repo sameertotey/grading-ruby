@@ -27,8 +27,31 @@ describe Grader do
   end
 
   describe '#trend' do
-    it 'can identity simple trend' do
+    it 'can identity empty trend' do
+      input = []
+      expect(grader.trend(input)).to eq("not in decline")
     end
+
+    it 'can identity short trend' do
+      input = [:down, :down]
+      expect(grader.trend(input)).to eq("not in decline")
+    end
+
+    it 'can identity short down trend' do
+      input = [:down, :down, :down]
+      expect(grader.trend(input)).to eq("in decline")
+    end
+
+    it 'can identity down trend' do
+      input = [:even, :even, :down, :even, :down, :even, :even, :even, :down]
+      expect(grader.trend(input)).to eq("in decline")
+    end
+
+    it 'can identity down trends reversed' do
+      input = [:down, :down, :down, :up]
+      expect(grader.trend(input)).to eq("not in decline")
+    end
+
   end
 
 end
